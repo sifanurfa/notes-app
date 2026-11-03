@@ -129,37 +129,56 @@ function renderList() {
     </div>
     <ul class="note-list"></ul>
   `
+  const searchInput = document.querySelector('#search')
   const noteList = document.querySelector('.note-list')
 
-  if (notes.length === 0) {
-    const emptyState = document.createElement('li')
-    emptyState.className = 'empty-state'
-    emptyState.textContent = 'Belum ada catatan.'
-    noteList.append(emptyState)
-    return
+  function renderNotes(notes, query = '') {
+    noteList.replaceChildren()
+
+    if (notes.length === 0) {
+      const emptyState = document.createElement('li')
+      emptyState.className = 'empty-state'
+      emptyState.textContent = query.trim()
+        ? 'Catatan tidak ditemukan.'
+        : 'Belum ada catatan.'
+      noteList.append(emptyState)
+      return
+    }
+
+    for (const note of notes) {
+      const item = document.createElement('li')
+      item.className = 'note-item'
+
+      const openButton = document.createElement('button')
+      openButton.className = 'note-open'
+      openButton.type = 'button'
+      openButton.addEventListener('click', () => openEditor(note))
+
+      const title = document.createElement('span')
+      title.className = 'note-title'
+      title.textContent = note.title
+
+      const body = document.createElement('span')
+      body.className = 'note-preview'
+      body.textContent = note.body || 'Tidak ada isi'
+
+      openButton.append(title, body)
+      item.append(openButton)
+      noteList.append(item)
+    }
   }
 
-  for (const note of notes) {
-    const item = document.createElement('li')
-    item.className = 'note-item'
+  searchInput.addEventListener('input', () => {
+    try {
+      clearError()
+      renderNotes(store.search(searchInput.value), searchInput.value)
+    } catch (error) {
+      noteList.replaceChildren()
+      showError('Pencarian catatan gagal. Periksa penyimpanan browser dan coba lagi.', error)
+    }
+  })
 
-    const openButton = document.createElement('button')
-    openButton.className = 'note-open'
-    openButton.type = 'button'
-    openButton.addEventListener('click', () => openEditor(note))
-
-    const title = document.createElement('span')
-    title.className = 'note-title'
-    title.textContent = note.title
-
-    const body = document.createElement('span')
-    body.className = 'note-preview'
-    body.textContent = note.body || 'Tidak ada isi'
-
-    openButton.append(title, body)
-    item.append(openButton)
-    noteList.append(item)
-  }
+  renderNotes(notes)
 }
 
 try {

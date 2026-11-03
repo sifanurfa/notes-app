@@ -29,11 +29,11 @@ describe("storage (WO-1)", () => {
  expect(store.list()).toHaveLength(0);
  });
 });
-// // Tambahkan blok ini saat mengerjakan WO-3
-// describe("search (WO-3)", () => {
-//  it("mencari di judul dan isi, tanpa beda huruf besar/kecil", () => { const store = createStore(fakeStorage());
-//  store.save({ title: "Belanja", body: "Susu" }); store.save({ title: "Kerja", body: "Rapat jam 9" });
-//  expect(store.search("RAPAT")).toHaveLength(1);
-//  expect(store.search("")).toHaveLength(2);
-//  });
-// });
+// Tambahkan blok ini saat mengerjakan WO-3
+describe("search (WO-3)", () => {
+ it("mencari di judul dan isi, tanpa beda huruf besar/kecil", () => { const store = createStore(fakeStorage());
+ store.save({ title: "Belanja", body: "Susu" }); store.save({ title: "Kerja", body: "Rapat jam 9" });
+ expect(store.search("RAPAT")).toHaveLength(1);
+ expect(store.search("")).toHaveLength(2);
+ });
+});

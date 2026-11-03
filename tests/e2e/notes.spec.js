@@ -17,14 +17,14 @@ test("tombol Simpan terlihat di layar 360 px", async ({ page }) => {
  await page.goto("/"); await page.getByRole("button", { name: "Tambah catatan" }).click();
  await expect(page.getByRole("button", { name: "Simpan" })).toBeInViewport();
 });
-// // WO-3: pencarian
-// test("mencari catatan", async ({ page }) => {
-//  await page.goto("/"); await addNote(page, "Belanja", "Susu");
-//  await addNote(page, "Kerja", "Rapat jam 9");
-//  await page.getByLabel("Cari").fill("rapat");
-//  await expect(page.getByText("Kerja")).toBeVisible();
-//  await expect(page.getByText("Belanja")).toBeHidden();
-// });
+// WO-3: pencarian
+test("mencari catatan", async ({ page }) => {
+ await page.goto("/"); await addNote(page, "Belanja", "Susu");
+ await addNote(page, "Kerja", "Rapat jam 9");
+ await page.getByLabel("Cari").fill("rapat");
+ await expect(page.getByText("Kerja")).toBeVisible();
+ await expect(page.getByText("Belanja")).toBeHidden();
+});
 // // WO-4: offline
 // test("tetap bisa dibuka saat offline", async ({ page, context }) => {
 //  await page.goto("/");
