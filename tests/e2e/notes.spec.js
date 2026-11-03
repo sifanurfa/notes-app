@@ -25,11 +25,11 @@ test("mencari catatan", async ({ page }) => {
  await expect(page.getByText("Kerja")).toBeVisible();
  await expect(page.getByText("Belanja")).toBeHidden();
 });
-// // WO-4: offline
-// test("tetap bisa dibuka saat offline", async ({ page, context }) => {
-//  await page.goto("/");
-//  await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
-//  await context.setOffline(true);
-//  await page.reload();
-//  await expect(page.getByRole("heading", { name: "Catatan", exact: true })).toBeVisible();
-// });
+// WO-4: offline
+test("tetap bisa dibuka saat offline", async ({ page, context }) => {
+ await page.goto("/");
+ await page.waitForFunction(() => navigator.serviceWorker.controller !== null);
+ await context.setOffline(true);
+ await page.reload();
+ await expect(page.getByRole("heading", { name: "Catatan", exact: true })).toBeVisible();
+});
