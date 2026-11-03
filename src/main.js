@@ -189,3 +189,11 @@ try {
 
 addButton.addEventListener('click', () => openEditor())
 renderList()
+
+if ('serviceWorker' in navigator) {
+  const serviceWorkerUrl = new URL(`${import.meta.env.BASE_URL}sw.js`, window.location.href)
+  navigator.serviceWorker.register(serviceWorkerUrl)
+    .catch((error) => {
+      showError('Aplikasi tidak dapat menyiapkan akses offline.', error)
+    })
+}
